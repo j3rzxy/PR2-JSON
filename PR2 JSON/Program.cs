@@ -72,28 +72,51 @@ namespace PR2_JSON
 
             client.Dispose();
         }
-
-        private static async Task DeleteTodo()
+        private static async Task ShowTodos()
         {
+            Console.Write("Введите ID пользователя: ");
+            int userId = int.Parse(Console.ReadLine()!);
 
+            HttpResponseMessage response =
+                await client.GetAsync(
+                    $"https://jsonplaceholder.typicode.com/todos?userId={userId}"
+                );
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Ошибка получения задач!");
+                return;
+            }
+
+            List<Todo>? todos =
+                await response.Content.ReadFromJsonAsync<List<Todo>>();
+
+            if (todos == null)
+            {
+                Console.WriteLine("Нет данных");
+                return;
+            }
+
+            foreach (Todo todo in todos)
+            {
+                Console.WriteLine(
+                    $"ID: {todo.Id}, Название: {todo.Title}, Выполнена: {todo.Completed}"
+                );
+            }
         }
-
-        private static async Task UpdateTodo()
-        {
-
-        }
-
-        private static async Task CreateTodo()
-        {
-
-        }
-
         private static async Task FindTodo()
         {
 
         }
+        private static async Task CreateTodo()
+        {
 
-        private static async Task ShowTodos()
+        }
+        private static async Task UpdateTodo()
+        {
+
+        }
+        private static async Task DeleteTodo()
         {
 
         }
