@@ -132,7 +132,36 @@ namespace PR2_JSON
         }
         private static async Task CreateTodo()
         {
+            Console.Write("ID пользователя: ");
+            int userId = int.Parse(Console.ReadLine()!);
 
+            Console.Write("Название задачи: ");
+            string title = Console.ReadLine() ?? "";
+
+            Todo newTodo = new Todo
+            {
+                UserId = userId,
+                Title = title,
+                Completed = false
+            };
+
+            HttpResponseMessage response =
+                await client.PostAsJsonAsync(
+                    "https://jsonplaceholder.typicode.com/todos",
+                    newTodo
+                );
+
+            if (response.IsSuccessStatusCode)
+            {
+                Todo? created =
+                    await response.Content.ReadFromJsonAsync<Todo>();
+
+                Console.WriteLine($"Задача создана! ID: {created?.Id}");
+            }
+            else
+            {
+                Console.WriteLine("Ошибка создания задачи!");
+            }
         }
         private static async Task UpdateTodo()
         {
