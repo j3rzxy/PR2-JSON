@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Json;
 
 namespace PR2_JSON
 {
@@ -32,22 +28,27 @@ namespace PR2_JSON
                     switch (choice)
                     {
                         case "1":
+                            Console.Clear();
                             await ShowTodos();
                             break;
 
                         case "2":
+                            Console.Clear();
                             await FindTodo();
                             break;
 
                         case "3":
+                            Console.Clear();
                             await CreateTodo();
                             break;
 
                         case "4":
+                            Console.Clear();
                             await UpdateTodo();
                             break;
 
                         case "5":
+                            Console.Clear();
                             await DeleteTodo();
                             break;
 
