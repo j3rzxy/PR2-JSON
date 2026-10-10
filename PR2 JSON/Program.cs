@@ -165,7 +165,31 @@ namespace PR2_JSON
         }
         private static async Task UpdateTodo()
         {
+            Console.Write("ID задачи: ");
+            int id = int.Parse(Console.ReadLine()!);
 
+            Console.Write("Задача выполнена? (true/false): ");
+            bool completed = bool.Parse(Console.ReadLine()!);
+
+            var data = new
+            {
+                completed = completed
+            };
+
+            HttpResponseMessage response =
+                await client.PatchAsJsonAsync(
+                    $"https://jsonplaceholder.typicode.com/todos/{id}",
+                    data
+                );
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Статус изменён!");
+            }
+            else
+            {
+                Console.WriteLine("Ошибка изменения!");
+            }
         }
         private static async Task DeleteTodo()
         {
