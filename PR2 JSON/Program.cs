@@ -106,6 +106,28 @@ namespace PR2_JSON
         }
         private static async Task FindTodo()
         {
+            Console.Write("Введите ID задачи: ");
+            int id = int.Parse(Console.ReadLine()!);
+
+            HttpResponseMessage response =
+                await client.GetAsync(
+                    $"https://jsonplaceholder.typicode.com/todos/{id}"
+                );
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Задача не найдена!");
+                return;
+            }
+
+            Todo? todo = await response.Content.ReadFromJsonAsync<Todo>();
+
+            if (todo != null)
+            {
+                Console.WriteLine($"ID: {todo.Id}");
+                Console.WriteLine($"Название: {todo.Title}");
+                Console.WriteLine($"Выполнена: {todo.Completed}");
+            }
 
         }
         private static async Task CreateTodo()
