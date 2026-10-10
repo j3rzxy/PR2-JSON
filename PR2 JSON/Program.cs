@@ -193,7 +193,22 @@ namespace PR2_JSON
         }
         private static async Task DeleteTodo()
         {
+            Console.Write("ID задачи: ");
+            int id = int.Parse(Console.ReadLine()!);
 
+            HttpResponseMessage response =
+                await client.DeleteAsync(
+                    $"https://jsonplaceholder.typicode.com/todos/{id}"
+                );
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Задача удалена!");
+            }
+            else
+            {
+                Console.WriteLine("Ошибка удаления!");
+            }
         }
     }
 }
